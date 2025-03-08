@@ -1,0 +1,75 @@
+#' @title Función cong.total
+#' @description   La función cong.total es utilizada para estudiar el parámetro total
+#' de una variable cuando se realiza un muestreo por conglomerados (unietápico o bietápico).
+#'
+#'
+#' @param y: vector numérico de las observaciones realizadas.
+#' @param V: vector que contiene los tamaños poblacionales de los conglomerados muestreados.
+#' @param v: vector que contiene los tamaños de las muestras extraídas de cada conglomerado. (v = 0, representará un muestreo por conglomerados unietápico).
+#' @param N: tamaño de la población muestreada.
+#' @param M: número de conglomerados en los que se divide la población.
+#' @param d: número de intervalos o clases utilizados para  construir el histograma de los datos observados y la tabla de frecuencias, cuando corresponda.
+#' @param alfa: nivel de error (1-alfa: nivel de confianza).
+#' @return
+#'
+#'Estudio Inferencial para el parámetro total poblacional a partir de un
+#'muestreo por conglomerados unietápico (v = 0; CON1) ó bietápico (CON2):
+#'
+#'  -Estimación: estimación del parámetro total (estimador: suma
+#'                                               ponderada muestral).
+#'
+#'-Varianza: estimación de la varianza de la suma ponderada muestral.
+#'
+#'-Error de muestreo: estimación de la desviación típica de la suma ponderada muestral.
+#'
+#'-Intervalos de confianza: intervalos de confianza al nivel 1-alfa
+#'para el parámetro total poblacional, bajo los supuestos de normalidad y
+#'no normalidad (s.n.-sin normalidad) en la población.
+#'
+#'Estudio Descriptivo:
+#'
+#'-Gráfico: Histograma de frecuencias absolutas y estimación de la función de densidad.
+#'
+#'-Estadísticos muestrales: Tamaño, media, mediana, varianza, desviación típica, coeficiente de variación, rango
+#'intercuartílico, coeficiente de asimetría y coeficiente de curtosis.
+#'
+#'-Tabulación: Tabla de frecuencias (muestras mayores de 50) ó diagrama tallo-hoja (en otro caso).
+#'
+#'
+#'
+#' @export cong.total
+#' @examples
+#' cong.total(x<-c(rnorm(1000,50,3),rnorm(2000,50,3),rnorm(500,50,3)),
+#' V=c(1000,2000,500), N=35000, M=10, d=20)
+
+
+
+
+
+
+cong.total<-function (y, N, M, V, v = 0, d = 5, alfa = 0.05)
+{
+  if (v == 0) {
+    v <- V
+    g <- length(V)
+    cat("\n", "CON1(", N, ",", M, ",", g, ")", "\n", "\n")
+    congl.total(y, V, v, N, M, d, alfa)
+  }
+  else {
+    if (length(v) == length(V)) {
+      L <- length(V)
+      j <- 1
+      cat("\n", "CON2(", N, ",", M, ",", L)
+      while (j <= L) {
+        cat(",{", V[j], ",", v[j], "}")
+        j <- j + 1
+      }
+      cat(")", "\n")
+      congl.total(y, V, v, N, M, d, alfa)
+    }
+    else {
+      cat("\n", "El número de conglomerados poblacionales NO coincide con el número de conglomerados muestrales.",
+          "\n")
+    }
+  }
+}
