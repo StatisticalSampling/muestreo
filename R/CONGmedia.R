@@ -54,7 +54,7 @@
 
 cong.media<-function (y, N, M, V, v = 0, d = 5, alfa = 0.05)
 {
-  if (v == 0) {
+  if (length(v) == 1 && v == 0) {
     v <- V
     g <- length(V)
     cat("\n", "CON1(", N, ",", M, ",", g, ")", "\n", "\n")
@@ -78,3 +78,4 @@ cong.media<-function (y, N, M, V, v = 0, d = 5, alfa = 0.05)
     }
   }
 }
+
